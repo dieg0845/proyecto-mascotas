@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import mascotasApi from "../../api/api";
 
 function MascotasForm({ onAdd }) {
@@ -17,6 +17,15 @@ function MascotasForm({ onAdd }) {
     const [selectedTamano, setTamanoSeleccionado] = useState("");
     const [imagen, setImagen] = useState(null);
 
+    const [errores, setErrores] = useState({});
+//para limpiar iamge despues de enviar form
+    const inputImagenRef = useRef(null);
+
+
+
+
+
+
     const fetchChoices = async () => {
         try {
             const response = await mascotasApi.get("choices/");
@@ -34,23 +43,55 @@ function MascotasForm({ onAdd }) {
         fetchChoices();
     }, [])
 
-    const handleSubmit = (e) => {
-        e.preventDefault();
-        //console.log(nombre, descripcion, edad, raza, selectedEstado, selectedTipoMascota, selectedSexo, selectedTamano, imagen);
-        console.log(imagen);
-        
-        const formData = new FormData();
-        formData.append("nombre", nombre);
-        formData.append("descripcion", descripcion);
-        formData.append("edad", edad);
-        formData.append("raza", raza);
-        formData.append("estado", selectedEstado);
-        formData.append("tipo_animal", selectedTipoMascota);
-        formData.append("sexo", selectedSexo);
-        formData.append("tamano", selectedTamano);
-        formData.append("imagen", imagen);
+    const handleSubmit = async (e) => {
+    e.preventDefault();
 
-        onAdd(formData);
+    const nuevosErrores = {};
+
+    if (!nombre.trim()) {
+        nuevosErrores.nombre = "El nombre es obligatorio";
+    }
+
+    if (!descripcion.trim()) {
+        nuevosErrores.descripcion = "La descripción es obligatoria";
+    }
+
+    if (!imagen) {
+        nuevosErrores.imagen = "Debe seleccionar una imagen";
+    }
+
+    if (Object.keys(nuevosErrores).length > 0) {
+        setErrores(nuevosErrores);
+        return;
+    }
+
+    setErrores({});
+
+    const formData = new FormData();
+
+    formData.append("nombre", nombre);
+    formData.append("descripcion", descripcion);
+    formData.append("edad", edad);
+    formData.append("raza", raza);
+    formData.append("estado", selectedEstado);
+    formData.append("tipo_animal", selectedTipoMascota);
+    formData.append("sexo", selectedSexo);
+    formData.append("tamano", selectedTamano);
+    formData.append("imagen", imagen);
+
+    await onAdd(formData);
+    setNombre("");
+    setDescripcion("");
+    setEdad("");
+    setRaza("");
+    setEstado("");
+    setTipoMascotaSeleccionada("");
+    setSexoSeleccionado("");
+    setTamanoSeleccionado("");
+    setImagen(null);
+    setErrores({});
+
+    inputImagenRef.current.value = "";
     }
 
     return (
@@ -69,8 +110,20 @@ function MascotasForm({ onAdd }) {
                         className="form-control"
                         type="text"
                         value={nombre}
-                        onChange={(e) => setNombre(e.target.value)}
+                        onChange={(e) => {
+                        setNombre(e.target.value);
+
+                        setErrores(prev => ({
+                        ...prev,
+                        nombre: ""
+                        }));
+                    }}
                     />
+                    {errores.nombre && (
+                        <div className="text-danger mt-1">
+                    {errores.nombre}
+    </div>
+)}
                 </div>
 
                 <div className="mb-3">
@@ -79,8 +132,22 @@ function MascotasForm({ onAdd }) {
                         className="form-control"
                         rows="1"
                         value={descripcion}
-                        onChange={(e) => setDescripcion(e.target.value)}
+                        onChange={(e) => {
+                        setDescripcion(e.target.value);
+
+                        setErrores(prev => ({
+                            ...prev,
+                            descripcion:""
+
+                        }));
+                    }}
+
                     ></textarea>
+                    {errores.descripcion && (
+                        <div className="text-danger mt-1">
+                    {errores.descripcion}
+    </div>
+)}
                 </div>
 
                 <div className="row">
@@ -190,10 +257,23 @@ function MascotasForm({ onAdd }) {
                 <div className="mb-4">
                     <label className="form-label">Imagen</label>
                     <input
+                        ref={inputImagenRef}
                         className="form-control"
                         type="file"
-                        onChange={(e) => setImagen(e.target.files[0])}
+                        onChange={(e) => {
+                        setImagen(e.target.files[0]);
+
+                        setErrores(prev => ({
+                        ...prev,
+                        imagen: ""
+                        }));
+                    }}
                     />
+                    {errores.imagen && (
+                        <div className="text-danger mt-1">
+                     {errores.imagen}
+    </div>
+)}
                 </div>
 
                 <button

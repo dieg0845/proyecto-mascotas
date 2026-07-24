@@ -16,17 +16,22 @@ function MascotasPage() {
         }
     }
 
-    const addMascotas = async (mascota) => {
-        try {
-            const response = await mascotasApi.post('mascotas/', mascota);
-            console.log(response);
-        } catch (error) {
-            console.log(error);
-        } finally {
-            fetchMascotas();
-        }
-    }
+        const addMascotas = async (mascota) => {
+            console.log("Entroo a addMascotas");
+            console.log(mascota);
+            try {
+                const response = await mascotasApi.post("mascotas/", mascota);
 
+            console.log(response.data);
+
+            await fetchMascotas();
+
+        } catch (error) {
+            
+            console.log(error.response?.status);
+            console.log(error.response?.data);
+    }
+}
     useEffect(() => {
         fetchMascotas();
     }, [])
