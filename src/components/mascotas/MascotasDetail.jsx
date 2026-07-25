@@ -9,20 +9,50 @@ function MascotasDetail() {
     const [fetchError, setFetchError] = useState(false);
     const [mascota, setMascota] = useState(null);
 
+    const [choices, setChoices] = useState(null);
+
+    const [estadoSeleccionado, setEstadoSeleccionado] = useState("");
+
     const fetchMascotaDetail = async () => {
         try {
             const response = await mascotasApi.get(`mascotas/${id}/`);
+
             console.log(response.data);
+
             setMascota(response.data);
+            setEstadoSeleccionado(response.data.estado);
         } catch (error) {
             console.log(error);
             setFetchError(true);
         }
     }
+    const fetchChoices = async () => {
+        try {
+
+            const response = await mascotasApi.get("choices/");
+            console.log(response.data);
+
+            setChoices(response.data);
+
+        } catch (error) {
+            console.log(error.response?.status);
+            console.log(error.response?.data);
+            }
+        }   
+    
+
+
 
     useEffect(() => {
         fetchMascotaDetail();
-    }, []);
+        fetchChoices();
+    },  []);
+
+
+
+    
+
+
 
     const addComentario = async (comentario) => {
         try {
@@ -44,10 +74,30 @@ function MascotasDetail() {
     }
 }  
 
+
+
+
     const deleteComentario = async (comentarioId) => {
     try {
 
         await mascotasApi.delete(`comentarios/${comentarioId}/`);
+
+        await fetchMascotaDetail();
+
+    } catch (error) {
+
+        console.log(error.response?.status);
+        console.log(error.response?.data);
+
+    }
+}
+
+    const actualizarEstado = async () => {
+        try {
+
+            await mascotasApi.patch(`mascotas/${id}/`, {
+            estado: estadoSeleccionado
+        });
 
         await fetchMascotaDetail();
 
@@ -114,7 +164,33 @@ function MascotasDetail() {
 
                             <div className="col-sm-6 mb-3">
                                 <strong>Estado:</strong><br />
-                                {mascota?.estado}
+                                {
+                                mascota?.estado === "en_adopcion"
+                                    ? "En adopción"
+                                    : mascota?.estado
+                                }
+                            <select
+                                className="form-select mt-2"
+                                value={estadoSeleccionado}
+                                onChange={(e) => setEstadoSeleccionado(e.target.value)}
+                            >
+                                {choices?.estado?.map((estado) => (
+                                    <option
+                                        key={estado.value}
+                                        value={estado.value}
+                            >
+                                        {estado.label}
+                                    </option>
+                                ))}
+                            </select>
+
+                            <button
+                                className="btn btn-primary btn-sm mt-2"
+                                onClick={actualizarEstado}
+                            >
+                                Actualizar estado
+                            </button>
+
                             </div>
 
                             <div className="col-sm-6 mb-3">
