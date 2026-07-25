@@ -80,19 +80,22 @@ function MascotasDetail() {
 
 
     const deleteComentario = async (comentarioId) => {
-    try {
+        if (!window.confirm("¿Está seguro de eliminar este comentario?")) {
+        return;
+        }
+        try {
 
-        await mascotasApi.delete(`comentarios/${comentarioId}/`);
+            await mascotasApi.delete(`comentarios/${comentarioId}/`);
 
-        await fetchMascotaDetail();
+            await fetchMascotaDetail();
 
-    } catch (error) {
+        } catch (error) {
 
-        console.log(error.response?.status);
-        console.log(error.response?.data);
+            console.log(error.response?.status);
+            console.log(error.response?.data);
 
+        }
     }
-}
 
     const actualizarEstado = async () => {
         try {
@@ -114,9 +117,11 @@ function MascotasDetail() {
 
 //eliminar mascota dentro de details mascot
     const deleteMascota = async () => {
+        if (!window.confirm("¿Está seguro de eliminar esta mascota?")) {
+        return;
+        }
         try {
-
-            await mascotasApi.delete(`mascotas/${id}/`);
+        await mascotasApi.delete(`mascotas/${id}/`);
 
             navigate("/mascotas");
 
