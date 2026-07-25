@@ -69,12 +69,15 @@ function MascotasDetail() {
             await fetchMascotaDetail();
 
         } catch (error) {
-
-        console.log(error.response?.status);
-        console.log(error.response?.data);
-
-    }
-}  
+            if (error.response?.status === 404) {
+                alert("Error 404. La mascota ya no existe o ya fue eliminada.");
+                navigate("/mascotas");
+                return;
+            }
+            console.log(error.response?.status);
+            console.log(error.response?.data);
+        }
+    }  
 
 
 
@@ -106,35 +109,43 @@ function MascotasDetail() {
 
         await fetchMascotaDetail();
 
-    } catch (error) {
+    } catch  (error) {
+        if (error.response?.status === 404) {
+            alert("Error 404. La mascota ya no existe o ya fue eliminada.");
+            navigate("/mascotas");
+            return;
+        }
 
-        console.log(error.response?.status);
-        console.log(error.response?.data);
-
-    }
+    console.log(error.response?.status);
+    console.log(error.response?.data);
+}
 }
 
 
 //eliminar mascota dentro de details mascot
     const deleteMascota = async () => {
         if (!window.confirm("¿Está seguro de eliminar esta mascota?")) {
-        return;
+            return;
         }
-        try {
-        await mascotasApi.delete(`mascotas/${id}/`);
 
+        try {
+            await mascotasApi.delete(`mascotas/${id}/`);
             navigate("/mascotas");
 
         } catch (error) {
 
+            if (error.response?.status === 404) {
+                alert("Error 404. La mascota ya no existe o ya fue eliminada.");
+                navigate("/mascotas");
+                return;
+            }
+
+            alert("Ocurrió un error al eliminar la mascota.");
+
             console.log(error.response?.status);
             console.log(error.response?.data);
-
         }
     }
-
-
-
     
 
     return (
