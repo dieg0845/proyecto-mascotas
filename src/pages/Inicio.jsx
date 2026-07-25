@@ -1,22 +1,43 @@
+import { Link } from "react-router-dom";
 
 function Inicio() {
     return (
-        <div className="container text-center mt-5">
+        <div
+            style={{
+                backgroundImage:
+                    "url('https://cdn.pixabay.com/photo/2018/10/01/09/21/pets-3715733_1280.jpg')",
+                backgroundSize: "cover",
+                backgroundPosition: "center",
+                minHeight: "100vh",
+                display: "flex",
+                justifyContent: "center",
+                alignItems: "center",
+            }}
+        >
+            <div
+                className="text-center"
+                style={{
+                    backgroundColor: "rgba(0, 0, 0, 0.45)",
+                    padding: "50px",
+                    borderRadius: "15px",
+                    color: "white",
+                }}
+            >
+                <h1 className="display-4 fw-bold">
+                    Bienvenido a Mascotas App
+                </h1>
 
-            <h1 className="mb-4">Bienvenido a Mascotas App</h1>
+                <p className="lead mt-3">
+                    Encuentra, publica y ayuda a reunir mascotas con sus familias.
+                </p>
 
-            <img
-                src="https://img.magnific.com/vector-gratis/portada-facebook-cuidado-mascotas-diseno-plano_23-2149641135.jpg?semt=ais_hybrid&w=740&q=80"
-                alt="Mascotas"
-                className="img-fluid rounded shadow"
-            />
-
-            <div className="mt-4">
-                <a href="/mascotas" className="btn btn-primary">
+                <Link
+                    to="/mascotas"
+                    className="btn btn-light"
+                >
                     Ingresar
-                </a>
+                </Link>
             </div>
-
         </div>
     );
 }

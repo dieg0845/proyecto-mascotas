@@ -1,6 +1,6 @@
 
 import { Link } from "react-router-dom";
-import MascotasForm from "./MascotasForm";
+
 
 
 function MascotasList({ lista, onAdd }) {
@@ -17,7 +17,7 @@ function MascotasList({ lista, onAdd }) {
         </div>
     </div>
 
-    <MascotasForm onAdd={onAdd} />
+    
 
     <div className="row mt-4">
 
