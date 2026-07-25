@@ -1,6 +1,7 @@
 import { useParams } from "react-router-dom";
 import mascotasApi from "../../api/api";
 import { useEffect, useState } from "react";
+import ComentarioForm from "../comentarios/ComentarioForm";
 
 function MascotasDetail() {
     const { id } = useParams();
@@ -22,6 +23,26 @@ function MascotasDetail() {
     useEffect(() => {
         fetchMascotaDetail();
     }, []);
+
+    const addComentario = async (comentario) => {
+        try {
+
+            const response = await mascotasApi.post(
+                `mascotas/${id}/comentar/`,
+                comentario
+            );
+
+            console.log(response.data);
+            
+            await fetchMascotaDetail();
+
+        } catch (error) {
+
+        console.log(error.response?.status);
+        console.log(error.response?.data);
+
+    }
+}
 
     return (
     <div className="container mt-5 mb-5">
@@ -90,6 +111,41 @@ function MascotasDetail() {
                             </div>
 
                         </div>
+                                        <hr className="my-4" />
+
+                <h3>Comentarios</h3>
+
+                {
+                    mascota?.comentarios?.length > 0 ? (
+
+                        mascota.comentarios.map((comentario) => (
+
+                            <div key={comentario.id} className="card mb-3">
+
+                                <div className="card-body">
+
+                                    <strong>Autor: </strong>{comentario.autor}
+
+                                    <p className="mt-2 mb-0">
+                                        {comentario.contenido}
+                                    </p>
+
+                                </div>
+
+                            </div>
+
+                        ))
+
+                    ) : (
+
+                        <p>No existen comentarios para esta mascota..</p>
+
+                    )
+                }
+                <hr className="my-4" />
+
+                <ComentarioForm
+                onAdd={addComentario} />
 
                     </div>
 
