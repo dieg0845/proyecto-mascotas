@@ -1,10 +1,12 @@
-import { useParams } from "react-router-dom";
 import mascotasApi from "../../api/api";
 import { useEffect, useState } from "react";
 import ComentarioForm from "../comentarios/ComentarioForm";
 
+import { useParams, useNavigate } from "react-router-dom";
+
 function MascotasDetail() {
     const { id } = useParams();
+    const navigate = useNavigate();
     console.log(id);
     const [fetchError, setFetchError] = useState(false);
     const [mascota, setMascota] = useState(null);
@@ -109,6 +111,25 @@ function MascotasDetail() {
     }
 }
 
+
+//eliminar mascota dentro de details mascot
+    const deleteMascota = async () => {
+        try {
+
+            await mascotasApi.delete(`mascotas/${id}/`);
+
+            navigate("/mascotas");
+
+        } catch (error) {
+
+            console.log(error.response?.status);
+            console.log(error.response?.data);
+
+        }
+    }
+
+
+
     
 
     return (
@@ -190,6 +211,12 @@ function MascotasDetail() {
                             >
                                 Actualizar estado
                             </button>
+                            <button
+                                className="btn btn-danger btn-sm mt-2 ms-2"
+                                onClick={deleteMascota}
+                            >
+                                Eliminar mascota    
+                            </button>
 
                             </div>
 
@@ -226,8 +253,8 @@ function MascotasDetail() {
                                         className="btn btn-danger btn-sm mt-3"
                                         onClick={() => deleteComentario(comentario.id)}
                                     >
-    Eliminar
-</button>
+                                        Eliminar
+                                    </button>
 
                                 </div>
 
