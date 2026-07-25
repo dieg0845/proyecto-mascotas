@@ -1,5 +1,12 @@
-### Commit 3
-## Uso de IA
+# commit 5 
+se implemento eliminar comentario mediante un button 
+
+
+
+
+
+Commit 3
+Uso de IA
 
 Se utilizó ChatGPT como apoyo en:
 

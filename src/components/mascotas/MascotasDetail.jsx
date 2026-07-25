@@ -42,7 +42,24 @@ function MascotasDetail() {
         console.log(error.response?.data);
 
     }
+}  
+
+    const deleteComentario = async (comentarioId) => {
+    try {
+
+        await mascotasApi.delete(`comentarios/${comentarioId}/`);
+
+        await fetchMascotaDetail();
+
+    } catch (error) {
+
+        console.log(error.response?.status);
+        console.log(error.response?.data);
+
+    }
 }
+
+    
 
     return (
     <div className="container mt-5 mb-5">
@@ -129,6 +146,12 @@ function MascotasDetail() {
                                     <p className="mt-2 mb-0">
                                         {comentario.contenido}
                                     </p>
+                                    <button
+                                        className="btn btn-danger btn-sm mt-3"
+                                        onClick={() => deleteComentario(comentario.id)}
+                                    >
+    Eliminar
+</button>
 
                                 </div>
 
