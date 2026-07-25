@@ -2,7 +2,7 @@ import { BrowserRouter as Router, Routes, Route, NavLink } from "react-router-do
 import MascotasPage from "./pages/MascotasPage";
 import MascotasForm from "./components/mascotas/MascotasForm";
 import MascotasDetail from "./components/mascotas/MascotasDetail";
-
+import Inicio from "./pages/Inicio";
 function App() {
 
   return (
@@ -17,6 +17,7 @@ function App() {
           </nav>
 
         <Routes>
+          <Route path="/" element={<Inicio />} />
           <Route path="/mascotas" element={<MascotasPage />} />
           <Route path="/mascotas/:id" element={<MascotasDetail />} />
         </Routes>
