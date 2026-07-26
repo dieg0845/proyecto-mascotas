@@ -9,12 +9,12 @@ function MascotasForm({ onAdd }) {
 
     const [nombre, setNombre] = useState("");
     const [descripcion, setDescripcion] = useState("");
-    const [edad, setEdad] = useState("");
-    const [raza, setRaza] = useState("");
-    const [selectedEstado, setEstado] = useState("");
-    const [selectedTipoMascota, setTipoMascotaSeleccionada] = useState("");
-    const [selectedSexo, setSexoSeleccionado] = useState("");
-    const [selectedTamano, setTamanoSeleccionado] = useState("");
+    const [edad, setEdad] = useState(1);
+    const [raza, setRaza] = useState("Desconocido");
+    const [selectedEstado, setEstado] = useState("perdida");
+    const [selectedTipoMascota, setTipoMascotaSeleccionada] = useState("otro");
+    const [selectedSexo, setSexoSeleccionado] = useState("desconocido");
+    const [selectedTamano, setTamanoSeleccionado] = useState("desconocido");
     const [imagen, setImagen] = useState(null);
 
     const [errores, setErrores] = useState({});
@@ -82,12 +82,12 @@ function MascotasForm({ onAdd }) {
     await onAdd(formData);
     setNombre("");
     setDescripcion("");
-    setEdad("");
-    setRaza("");
-    setEstado("");
-    setTipoMascotaSeleccionada("");
-    setSexoSeleccionado("");
-    setTamanoSeleccionado("");
+    setEdad(1);
+    setRaza("Desconocido");
+    setEstado("perdida");
+    setTipoMascotaSeleccionada("otro");
+    setSexoSeleccionado("desconocido");
+    setTamanoSeleccionado("desconocido");
     setImagen(null);
     setErrores({});
 
@@ -157,6 +157,7 @@ function MascotasForm({ onAdd }) {
                         <input
                             className="form-control"
                             type="number"
+                            min="1"
                             value={edad}
                             onChange={(e) => setEdad(e.target.value)}
                         />
@@ -183,7 +184,8 @@ function MascotasForm({ onAdd }) {
                             value={selectedEstado}
                             onChange={(e) => setEstado(e.target.value)}
                         >
-                            <option value="">Sin estado</option>
+                            
+
                             {
                                 estados.map(e => (
                                     <option value={e.value} key={e.value}>
@@ -201,7 +203,7 @@ function MascotasForm({ onAdd }) {
                             value={selectedTipoMascota}
                             onChange={(e) => setTipoMascotaSeleccionada(e.target.value)}
                         >
-                            <option value="">Sin estado</option>
+                            
                             {
                                 tipoMascota.map(e => (
                                     <option value={e.value} key={e.value}>
@@ -223,7 +225,7 @@ function MascotasForm({ onAdd }) {
                             value={selectedSexo}
                             onChange={(e) => setSexoSeleccionado(e.target.value)}
                         >
-                            <option value="">Sin estado</option>
+                            
                             {
                                 sexo.map(e => (
                                     <option value={e.value} key={e.value}>
@@ -241,7 +243,8 @@ function MascotasForm({ onAdd }) {
                             value={selectedTamano}
                             onChange={(e) => setTamanoSeleccionado(e.target.value)}
                         >
-                            <option value="">Sin estado</option>
+                            
+
                             {
                                 tamano.map(e => (
                                     <option value={e.value} key={e.value}>
