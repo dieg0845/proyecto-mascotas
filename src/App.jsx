@@ -1,6 +1,5 @@
 import { BrowserRouter as Router, Routes, Route, NavLink } from "react-router-dom";
 import MascotasPage from "./pages/MascotasPage";
-import MascotasForm from "./components/mascotas/MascotasForm";
 import MascotasDetail from "./components/mascotas/MascotasDetail";
 import Inicio from "./pages/Inicio";
 import NuevaMascotaPage from "./pages/NuevaMascotaPage";

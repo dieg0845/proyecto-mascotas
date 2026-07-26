@@ -274,7 +274,7 @@ function MascotasForm({ onAdd }) {
                     />
                     {errores.imagen && (
                         <div className="text-danger mt-1">
-                     {errores.imagen}
+                    {errores.imagen}
     </div>
 )}
                 </div>

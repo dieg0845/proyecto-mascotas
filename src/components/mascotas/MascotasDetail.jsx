@@ -200,6 +200,15 @@ function MascotasDetail() {
                             </div>
 
                             <div className="col-sm-6 mb-3">
+                                <strong>Sexo:</strong><br />
+                                {mascota?.sexo}
+                            </div>
+
+                            <div className="col-sm-6 mb-3">
+                                <strong>tipo animal:</strong><br />
+                                {mascota?.tipo_animal}
+                            </div>
+                            <div className="col-sm-6 mb-3">
                                 <strong>Estado:</strong><br />
                                 {
                                 mascota?.estado === "en_adopcion"
@@ -236,15 +245,14 @@ function MascotasDetail() {
 
                             </div>
 
-                            <div className="col-sm-6 mb-3">
-                                <strong>Sexo:</strong><br />
-                                {mascota?.sexo}
-                            </div>
 
                             <div className="col-sm-6 mb-3">
                                 <strong>Tamaño:</strong><br />
                                 {mascota?.tamano}
                             </div>
+
+
+                            
 
                         </div>
                                         <hr className="my-4" />
